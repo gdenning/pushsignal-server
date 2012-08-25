@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jee="http://www.springframework.org/schema/jee" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+      http://www.springframework.org/schema/aop
+      http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+      http://www.springframework.org/schema/tx
+      http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+      http://www.springframework.org/schema/context 
+      http://www.springframework.org/schema/context/spring-context-2.5.xsd
+      http://www.springframework.org/schema/jee
+      http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+      http://www.springframework.org/schema/lang
+      http://www.springframework.org/schema/lang/spring-lang-2.5.xsd">
+	
+	<!-- ******************************************************************** -->
+	<!-- Mark bean transactions as annotation driven -->
+	<!-- ******************************************************************** -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+
+	<bean id="jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<list>
+				<value>com.pushsignal.xml.jaxb.ActivityDTO</value>
+				<value>com.pushsignal.xml.jaxb.ActivitySetDTO</value>
+				<value>com.pushsignal.xml.jaxb.DeleteResultDTO</value>
+				<value>com.pushsignal.xml.jaxb.ErrorResultDTO</value>
+				<value>com.pushsignal.xml.jaxb.EventSetDTO</value>
+				<value>com.pushsignal.xml.jaxb.EventDTO</value>
+				<value>com.pushsignal.xml.jaxb.EventInviteSetDTO</value>
+				<value>com.pushsignal.xml.jaxb.EventInviteDTO</value>
+				<value>com.pushsignal.xml.jaxb.EventMemberDTO</value>
+				<value>com.pushsignal.xml.jaxb.TriggerSetDTO</value>
+				<value>com.pushsignal.xml.jaxb.TriggerDTO</value>
+				<value>com.pushsignal.xml.jaxb.TriggerAlertDTO</value>
+				<value>com.pushsignal.xml.jaxb.UserDTO</value>
+				<value>com.pushsignal.xml.jaxb.UserDeviceDTO</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="xmlView" class="org.springframework.web.servlet.view.xml.MarshallingView" lazy-init="true">
+	    <constructor-arg ref="jaxb2Marshaller" />
+		<property name="contentType" value="application/xml" />
+	</bean>	
+	
+	<bean id="PushClientC2dm" class="com.pushsignal.push.PushClientC2dmImpl"
+		scope="singleton">
+	</bean>	
+</beans>

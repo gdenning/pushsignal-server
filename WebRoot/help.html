@@ -1,0 +1,291 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>PushSignal REST Service Help</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+  </head>
+  
+  <body>
+    <h1>PushSignal REST Service Help</h1>
+    <hr/>
+    <h2><u>Account</u></h2>
+    <h3>Create</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To create a new PushSignal account.  This is the only call that does not require HTTP authentication.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/account/create</td></tr> 
+	    <tr><td>Method</td><td colspan="2">POST</td></tr> 
+	    <tr><td rowspan="3">Querystring</td><td width="100px">email=</td><td>User's email address.</td></tr> 
+	    <tr><td>name=</td><td>User's name.</td></tr> 
+	    <tr><td>description=</td><td>A short description of up to 255 characters.</td></tr> 
+	    <tr><td rowspan="2">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	</table> 
+    <h3>Reset Password</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To reset the logged-in PushSignal account password.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/account/resetPassword</td></tr> 
+	    <tr><td>Method</td><td colspan="2">POST</td></tr> 
+	    <tr><td rowspan="1">Querystring</td><td width="100px">email=</td><td>User's email address.</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+	<h3>Update</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To modify the logged-in PushSignal account details.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/account/update</td></tr> 
+	    <tr><td>Method</td><td colspan="2">POST</td></tr> 
+	    <tr><td rowspan="2">Querystring</td><td width="100px">name=</td><td>User's name.</td></tr> 
+	    <tr><td>description=</td><td>A short description of up to 255 characters.</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <h3>Register Device</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To register a new device to the logged-in account.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/account/registerDevice</td></tr> 
+	    <tr><td>Method</td><td colspan="2">POST</td></tr> 
+	    <tr><td rowspan="3">Querystring</td><td width="100px">deviceType=</td><td>[C2dm|Mqtt]</td></tr> 
+	    <tr><td>deviceId=</td><td>Phone unique identifier; for Android devices this represents the android.provider.Settings.Secure.ANDROID_ID value.</td></tr> 
+	    <tr><td>registrationId=</td><td>Push service registration id.  For C2DM this represents the value returned by the registration call.</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <hr/>
+    <h2><u>Events</u></h2>
+    <h3>Get All Public</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To retrieve a list of all public events, sorted by number of members (descending).</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/events/public</td></tr> 
+	    <tr><td>Method</td><td colspan="2">GET</td></tr> 
+	    <tr><td rowspan="2">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <h3>Get All</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To retrieve a list of all of the logged-in user's event memberships.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/events/all</td></tr> 
+	    <tr><td>Method</td><td colspan="2">GET</td></tr> 
+	    <tr><td rowspan="3">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <h3>Get</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To retrieve details of a particular event.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/events/{eventId}</td></tr> 
+	    <tr><td>Method</td><td colspan="2">GET</td></tr> 
+	    <tr><td rowspan="3">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <h3>Create</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To create a new signal event.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/events/create</td></tr> 
+	    <tr><td>Method</td><td colspan="2">POST</td></tr> 
+	    <tr><td rowspan="4">Querystring</td><td width="100px">name=</td><td>Event name.</td></tr> 
+	    <tr><td>description=</td><td>A short description of up to 255 characters.</td></tr> 
+	    <tr><td>triggerPermission=</td><td>[ALL_MEMBERS|OWNER_ONLY|URL_ONLY]</td></tr> 
+	    <tr><td>publicFlag=</td><td>true if event should be publicly searchable, or false if it should be private.</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <h3>Update</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To update the details of an existing signal event.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/events/{eventId}</td></tr> 
+	    <tr><td>Method</td><td colspan="2">POST</td></tr> 
+	    <tr><td rowspan="4">Querystring</td><td width="100px">name=</td><td>Event name.</td></tr> 
+	    <tr><td>description=</td><td>A short description of up to 255 characters.</td></tr> 
+	    <tr><td>triggerPermission=</td><td>[ALL_MEMBERS|OWNER_ONLY|URL_ONLY]</td></tr> 
+	    <tr><td>publicFlag=</td><td>true if event should be publicly searchable, or false if it should be private.</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table>
+    <h3>Join Public Event</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To join a public event.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/events/{eventId}/join</td></tr> 
+	    <tr><td>Method</td><td colspan="2">POST</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table>
+    <h3>Leave</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To unsubscribe from an event.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/events/{eventId}/leave</td></tr> 
+	    <tr><td>Method</td><td colspan="2">POST</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table>
+    <h3>Delete</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To delete an event that you created.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/events/{eventId}</td></tr> 
+	    <tr><td>Method</td><td colspan="2">DELETE</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table>
+    <hr/>
+    <h2><u>Invites</u></h2>
+    <h3>Get All</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To retrieve a list of all of the logged-in user's event invites.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/invites/all</td></tr> 
+	    <tr><td>Method</td><td colspan="2">GET</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <h3>Get</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To retrieve details of a particular event invite.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/invites/{inviteId}</td></tr> 
+	    <tr><td>Method</td><td colspan="2">GET</td></tr> 
+	    <tr><td rowspan="3">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <h3>Create</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To invite a user to a signal event.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/invites/create</td></tr> 
+	    <tr><td>Method</td><td colspan="2">POST</td></tr> 
+	    <tr><td rowspan="2">Querystring</td><td width="100px">eventId=</td><td>ID of the event.</td></tr> 
+	    <tr><td>email=</td><td>Email address of the user to invite to the event.</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <h3>Accept</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To accept a signal event invite.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/invites/{eventId}/accept</td></tr> 
+	    <tr><td>Method</td><td colspan="2">POST</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table>
+    <h3>Decline</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To decline a signal event invite.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/invites/{eventId}</td></tr> 
+	    <tr><td>Method</td><td colspan="2">DELETE</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table>
+    <hr/>
+    <h2><u>Triggers</u></h2>
+    <h3>Get</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To retrieve details of a particular trigger event.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/triggers/{triggerId}</td></tr> 
+	    <tr><td>Method</td><td colspan="2">GET</td></tr> 
+	    <tr><td rowspan="3">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <h3>Get Missed</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To retrieve all active (not acknowledged or silenced) triggers for the logged-in user.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/triggers/missed</td></tr> 
+	    <tr><td>Method</td><td colspan="2">GET</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <h3>Create</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To trigger an event.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/triggers/create</td></tr> 
+	    <tr><td>Method</td><td colspan="2">POST</td></tr> 
+	    <tr><td rowspan="1">Querystring</td><td width="100px">eventId=</td><td>ID of the event.</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <h3>Create (Public)</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To trigger an event.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/triggers/create/{eventGuid}</td></tr> 
+	    <tr><td>Method</td><td colspan="2">GET</td></tr> 
+	    <tr><td rowspan="3">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <h3>Acknowledge</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To acknowledge an event trigger.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/triggers/{triggerId}/ack</td></tr> 
+	    <tr><td>Method</td><td colspan="2">POST</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <h3>Silence</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To silence an event trigger for all of the logged-in user's devices.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/triggers/{triggerId}/silence</td></tr> 
+	    <tr><td>Method</td><td colspan="2">POST</td></tr> 
+	    <tr><td rowspan="4">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">400 Bad Request</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <hr/>
+    <h2><u>Trigger Alerts</u></h2>
+    <h3>Get</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To retrieve details of a particular trigger alert (notification to a particular user about a trigger).</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/alerts/{alertId}</td></tr> 
+	    <tr><td>Method</td><td colspan="2">GET</td></tr> 
+	    <tr><td rowspan="3">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table>
+	<hr/> 
+    <h2><u>Activities</u></h2>
+    <h3>Get All</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To retrieve a list of all of the logged-in user's activities.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/activities/all</td></tr> 
+	    <tr><td>Method</td><td colspan="2">GET</td></tr> 
+	    <tr><td rowspan="3">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+    <h3>Get</h3>
+	<table border="1" style="border-collapse:collapse" cellpadding="2" width="100%">
+	    <tr><td width="75px">Purpose</td><td colspan="2">To retrieve details of a particular activity.</td></tr> 
+	    <tr><td>URL</td><td colspan="2">http://PushSignal.com/api/activities/{activityId}</td></tr> 
+	    <tr><td>Method</td><td colspan="2">GET</td></tr> 
+	    <tr><td rowspan="3">Returns</td><td colspan="2">200 OK &amp; XML</td></tr> 
+	    <tr><td colspan="2">401 Unauthorized</td></tr> 
+	    <tr><td colspan="2">404 Not Found</td></tr> 
+	</table> 
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security" 
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    	http://www.springframework.org/schema/security 
+        http://www.springframework.org/schema/security/spring-security-3.0.xsd
+      	http://www.springframework.org/schema/context 
+      	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+      	
+	<http>
+	    <anonymous />
+	    <http-basic />
+	    <!-- 
+	    <logout />
+	    <remember-me />
+	     -->
+		<intercept-url pattern="/secure/**" access="ROLE_SUPERVISOR" />
+		<intercept-url pattern="/account/create" filters="none" />
+		<intercept-url pattern="/account/resetPassword" filters="none" />
+		<intercept-url pattern="/account/**" access="ROLE_USER" />
+		<intercept-url pattern="/activities/**" access="ROLE_USER" />
+		<intercept-url pattern="/events/public" filters="none" />
+		<intercept-url pattern="/events/**" access="ROLE_USER" />
+		<intercept-url pattern="/invites/**" access="ROLE_USER" />
+		<intercept-url pattern="/triggers/create/*" filters="none" />
+		<intercept-url pattern="/triggers/**" access="ROLE_USER" />
+		<intercept-url pattern="/alerts/**" access="ROLE_USER" />
+		<intercept-url pattern="/**" filters="none" />
+    </http>
+    
+    <beans:bean id="customUserDetailsService" class="com.pushsignal.security.MyUserDetailsService" />
+    
+	<!-- Your application may use the PasswordEncryptor in several places, --> 
+	<!-- like for example at new user sign-up.                             --> 
+	<beans:bean id="jasyptPasswordEncryptor" class="org.jasypt.util.password.StrongPasswordEncryptor" />
+  
+	<!-- This Spring Security-friendly PasswordEncoder implementation will -->
+	<!-- wrap the PasswordEncryptor instance so that it can be used from   -->
+	<!-- the security framework.                                           -->
+  	<beans:bean id="passwordEncoder" class="org.jasypt.spring.security3.PasswordEncoder">
+		<beans:property name="passwordEncryptor" ref="jasyptPasswordEncryptor" />
+	</beans:bean>
+
+	<!-- Your DaoAuthenticationProvider will then use it like with any     -->
+	<!-- other implementation of the PasswordEncoder interface.            -->
+	<beans:bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="customUserDetailsService"/>
+		<beans:property name="passwordEncoder" ref="passwordEncoder" />
+	</beans:bean>
+    
+  	<authentication-manager>
+		<authentication-provider ref="daoAuthenticationProvider" />
+    </authentication-manager>
+    
+</beans:beans>
