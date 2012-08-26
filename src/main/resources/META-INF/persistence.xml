@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	
+	<persistence-unit name="entityManagerFactory" transaction-type="RESOURCE_LOCAL">
+		<description>generated-persistence-unit</description>
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>com.pushsignal.domain.Activity</class>
+		<class>com.pushsignal.domain.ConfigC2dm</class>
+		<class>com.pushsignal.domain.TriggerAlert</class>
+		<class>com.pushsignal.domain.Trigger</class>
+		<class>com.pushsignal.domain.User</class>
+		<class>com.pushsignal.domain.UserDevice</class>
+		<class>com.pushsignal.domain.Event</class>
+		<class>com.pushsignal.domain.EventInvite</class>
+		<class>com.pushsignal.domain.EventMember</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+	</persistence-unit>
+	
+</persistence>
