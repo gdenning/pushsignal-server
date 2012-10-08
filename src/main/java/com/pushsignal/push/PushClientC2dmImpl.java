@@ -7,16 +7,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.pushsignal.http.HttpExecutor;
 import com.pushsignal.http.HttpResponse;
 import com.pushsignal.logic.ConfigC2dmLogic;
 
+@Service(value="PushClientC2dm")
 public class PushClientC2dmImpl implements PushClient {
 	private static final Logger LOG = Logger.getLogger(PushClientC2dmImpl.class);
 
 	private static final String C2DM_POST_URL = "https://android.apis.google.com/c2dm/send";
-	private static final String C2DM_MESSAGE_EXTRA = "message";
 
 	@Autowired
 	private ConfigC2dmLogic configC2dmLogic;
@@ -25,7 +26,7 @@ public class PushClientC2dmImpl implements PushClient {
 		final Map<String, String> params = new HashMap<String, String>();
 		params.put("registration_id", registrationId);
 		params.put("collapse_key", "PushSignal");
-		params.put("data." + C2DM_MESSAGE_EXTRA, message);
+		params.put("data.message", message);
 		final Map<String, String> requestProperties = new HashMap<String, String>();
 		requestProperties.put("Authorization", "GoogleLogin auth=" + configC2dmLogic.getAuthToken());
 

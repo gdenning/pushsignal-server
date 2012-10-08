@@ -34,11 +34,7 @@
 	</bean>
 
 	<bean id="xmlView" class="org.springframework.web.servlet.view.xml.MarshallingView" lazy-init="true">
-	    <constructor-arg ref="jaxb2Marshaller" />
+		<constructor-arg ref="jaxb2Marshaller" />
 		<property name="contentType" value="application/xml" />
-	</bean>	
-	
-	<bean id="PushClientC2dm" class="com.pushsignal.push.PushClientC2dmImpl"
-		scope="singleton">
 	</bean>	
 </beans>
