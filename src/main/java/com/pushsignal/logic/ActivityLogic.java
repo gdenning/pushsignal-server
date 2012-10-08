@@ -23,7 +23,7 @@ import com.pushsignal.push.Notifier;
 @Scope("singleton")
 @Service
 public class ActivityLogic extends AbstractLogic {
-	private static final Logger LOG = Logger.getLogger("com.pushsignal.logic.ActivityLogic");
+	private static final Logger LOG = Logger.getLogger(ActivityLogic.class);
 
 	private static final int MAX_ACTIVITIES = 25;
 

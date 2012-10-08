@@ -11,7 +11,7 @@ import com.pushsignal.exceptions.PushSignalException;
 import com.pushsignal.xml.jaxb.ErrorResultDTO;
 
 public abstract class AbstractController {
-	private static final Logger LOG = Logger.getLogger("com.pushsignal.rest.AbstractController");
+	private static final Logger LOG = Logger.getLogger(AbstractController.class);
 
 	protected String getAuthenticatedEmail() {
 		return SecurityContextHolder.getContext().getAuthentication().getName();

@@ -22,7 +22,9 @@ import com.pushsignal.push.Notifier;
 @Scope("singleton")
 @Service
 public class TriggerLogic extends AbstractLogic {
-	
+
+	private static final Logger LOG = Logger.getLogger(TriggerLogic.class);
+
 	private static final int POINTS_FOR_TRIGGER_ACKNOWLEDGED = 5;
 
 	private static final String TRIGGER_ALERT = "TRIGGER_ALERT:";
@@ -31,14 +33,12 @@ public class TriggerLogic extends AbstractLogic {
 
 	private static final String TRIGGER_ACK = "TRIGGER_ACK:";
 
-	private static final Logger LOG = Logger.getLogger("com.pushsignal.logic.TriggerLogic");	
-	
 	@Autowired
 	private TriggerLogicTransactional persist;
 
 	@Autowired
 	private TriggerDAO triggerDAO;
-	
+
 	@Autowired
 	private ActivityLogic activityLogic;
 
@@ -65,9 +65,9 @@ public class TriggerLogic extends AbstractLogic {
 
 	public Trigger createTrigger(final String authenticatedEmail, final long eventId) {
 		LOG.debug("TriggerLogic.createTrigger(" + authenticatedEmail + "," + eventId + ")");
-		
+
 		final User userMe = getAuthenticatedUser(authenticatedEmail);
-		
+
 		// Persist and flush trigger and trigger alerts first so that clients can find
 		// them in the database.
 		final Trigger trigger = persist.createTrigger(userMe, eventId);
@@ -81,7 +81,7 @@ public class TriggerLogic extends AbstractLogic {
 
 	public Trigger createTriggerByGuid(final String urlGuid) {
 		LOG.debug("TriggerLogic.createTriggerByGuid(" + urlGuid + ")");
-		
+
 		// Persist and flush trigger and trigger alerts first so that clients can find
 		// them in the database.
 		final Trigger trigger = persist.createTriggerByGuid(urlGuid);
@@ -95,56 +95,56 @@ public class TriggerLogic extends AbstractLogic {
 
 	public TriggerAlert ackTrigger(final String authenticatedEmail, final long triggerId) {
 		LOG.debug("TriggerLogic.ackTrigger(" + authenticatedEmail + "," + triggerId + ")");
-		
+
 		final Trigger trigger = triggerDAO.findTriggerByPrimaryKey(triggerId);
 		if (trigger == null) {
 			throw new ResourceNotFoundException("Unable to locate trigger with passed ID: "
 					+ triggerId);
 		}
-		
+
 		// Persist and flush trigger alert first so that clients will see changes to it
 		// in the database.
 		final User userMe = getAuthenticatedUser(authenticatedEmail);
-		final TriggerAlert myTriggerAlert = trigger.getTriggerAlertForUser(userMe); 
+		final TriggerAlert myTriggerAlert = trigger.getTriggerAlertForUser(userMe);
 		persist.ackTrigger(myTriggerAlert.getTriggerAlertId());
-		
+
 		// Notify all subscribers that you have acknowledged
 		notifier.sendNotifications(trigger, TRIGGER_ACK, staticId(myTriggerAlert.getTriggerAlertId()));
 
 		// Give points to the user who sent the trigger
 		activityLogic.createActivity(trigger.getUser(), "Trigger of event " + trigger.getEvent().getName() + " was acknowledged by " + userMe.getName(), POINTS_FOR_TRIGGER_ACKNOWLEDGED);
-		
+
 		return myTriggerAlert;
 	}
-	
+
 	public TriggerAlert silenceTrigger(final String authenticatedEmail, final long triggerId) {
 		LOG.debug("TriggerLogic.silenceTrigger(" + authenticatedEmail + "," + triggerId + ")");
-		
+
 		final User userMe = getAuthenticatedUser(authenticatedEmail);
-		
+
 		// Persist and flush trigger alert first so that clients will see changes to it
 		// in the database.
 		final TriggerAlert myTriggerAlert = persist.silenceTrigger(userMe, triggerId);
-		
+
 		// Notify all of my devices that this trigger is now silent
 		notifier.sendNotifications(myTriggerAlert.getUser(), "TRIGGER_SILENCE:", staticId(myTriggerAlert.getTriggerAlertId()));
-		
+
 		return myTriggerAlert;
 	}
 
-	public void setNotifier(Notifier notifier) {
+	public void setNotifier(final Notifier notifier) {
 		this.notifier = notifier;
 	}
 
-	public void setTriggerDAO(TriggerDAO triggerDAO) {
+	public void setTriggerDAO(final TriggerDAO triggerDAO) {
 		this.triggerDAO = triggerDAO;
 	}
 
-	public void setPersist(TriggerLogicTransactional persist) {
+	public void setPersist(final TriggerLogicTransactional persist) {
 		this.persist = persist;
 	}
 
-	public void setActivityLogic(ActivityLogic activityLogic) {
+	public void setActivityLogic(final ActivityLogic activityLogic) {
 		this.activityLogic = activityLogic;
 	}
 }

@@ -24,9 +24,9 @@ import com.pushsignal.push.Notifier;
 @Scope("singleton")
 @Service
 public class InviteLogic extends AbstractLogic {
-	private static final int POINTS_FOR_INVITE_ACCEPTED = 10;
+	private static final Logger LOG = Logger.getLogger(InviteLogic.class);
 
-	private static final Logger LOG = Logger.getLogger("com.pushsignal.logic.InviteLogic");	
+	private static final int POINTS_FOR_INVITE_ACCEPTED = 10;
 
 	private static final String ACCEPTABLE_EMAIL_REGEX = "(?i)^[A-Z0-9._%-]+@(?:[A-Z0-9-]+\\.)+[A-Z]{2,4}$";
 
@@ -35,7 +35,7 @@ public class InviteLogic extends AbstractLogic {
 
 	@Autowired
 	private EventInviteDAO eventInviteDAO;
-	
+
 	@Autowired
 	private ActivityLogic activityLogic;
 
@@ -84,7 +84,7 @@ public class InviteLogic extends AbstractLogic {
 			body.append("If no longer have PushSignal installed, you can download it from https://market.android.com/details?id=com.pushsignal.\n");
 		}
 		emailClient.sendEmail(email, userMe.getEmail() + " has invited you to a PushSignal event", body.toString());
-		
+
 		return updatedInvite;
 	}
 
@@ -93,7 +93,7 @@ public class InviteLogic extends AbstractLogic {
 
 		final User userMe = getAuthenticatedUser(authenticatedEmail);
 		final EventMember eventMember = persist.acceptInvite(userMe, inviteId);
-		
+
 		// Notify all event members that the event has changed
 		notifier.sendNotifications(eventMember.getEvent(), "EVENT_CHANGED:", staticId(eventMember.getEvent().getEventId()));
 
@@ -101,7 +101,7 @@ public class InviteLogic extends AbstractLogic {
 		if (invite != null && invite.getCreatedBy() != null) {
 			activityLogic.createActivity(invite.getCreatedBy(), "Invite to event " + invite.getEvent().getName() + " was accepted by " + userMe.getName(), POINTS_FOR_INVITE_ACCEPTED);
 		}
-		
+
 		return eventMember;
 	}
 
@@ -115,19 +115,19 @@ public class InviteLogic extends AbstractLogic {
 		return invite;
 	}
 
-	public void setPersist(InviteLogicTransactional persist) {
+	public void setPersist(final InviteLogicTransactional persist) {
 		this.persist = persist;
 	}
 
-	public void setNotifier(Notifier notifier) {
+	public void setNotifier(final Notifier notifier) {
 		this.notifier = notifier;
 	}
 
-	public void setEventInviteDAO(EventInviteDAO eventInviteDAO) {
+	public void setEventInviteDAO(final EventInviteDAO eventInviteDAO) {
 		this.eventInviteDAO = eventInviteDAO;
 	}
 
-	public void setEmailClient(EmailClient emailClient) {
+	public void setEmailClient(final EmailClient emailClient) {
 		this.emailClient = emailClient;
 	}
 }

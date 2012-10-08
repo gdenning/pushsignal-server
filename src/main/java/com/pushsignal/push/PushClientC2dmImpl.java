@@ -13,7 +13,7 @@ import com.pushsignal.http.HttpResponse;
 import com.pushsignal.logic.ConfigC2dmLogic;
 
 public class PushClientC2dmImpl implements PushClient {
-	private static final Logger LOG = Logger.getLogger("com.pushsignal.logic.ConfigC2dmLogic");
+	private static final Logger LOG = Logger.getLogger(PushClientC2dmImpl.class);
 
 	private static final String C2DM_POST_URL = "https://android.apis.google.com/c2dm/send";
 	private static final String C2DM_MESSAGE_EXTRA = "message";

@@ -22,7 +22,7 @@ import static com.pushsignal.push.Notifier.staticId;
 @Scope("singleton")
 @Service
 public class EventLogic extends AbstractLogic {
-	private static final Logger LOG = Logger.getLogger("com.pushsignal.logic.EventLogic");	
+	private static final Logger LOG = Logger.getLogger(EventLogic.class);
 
 	private static final int MAX_PUBLIC_EVENTS = 25;
 	private static final int POINTS_FOR_JOINING_PUBLIC_EVENT = 10;
@@ -33,16 +33,16 @@ public class EventLogic extends AbstractLogic {
 
 	@Autowired
 	private EventDAO eventDAO;
-	
+
 	@Autowired
 	private ActivityLogic activityLogic;
 
 	@Autowired
 	private Notifier notifier;
-	
+
 	@Autowired
 	private EmailClient emailClient;
-	
+
 	public Set<Event> getAllEvents(final String authenticatedEmail) {
 		final User userMe = getAuthenticatedUser(authenticatedEmail);
 		return eventDAO.findEventsByUserId(userMe.getUserId());
@@ -71,18 +71,18 @@ public class EventLogic extends AbstractLogic {
 	public Event createEvent(
 			final String authenticatedEmail,
 			final String name,
-			final String description, 
+			final String description,
 			final TriggerPermissionEnum triggerPermission,
 			final boolean publicFlag) {
 		LOG.debug("EventLogic.createEvent(" + authenticatedEmail + "," + name + "," + description + "," + triggerPermission.name() + "," + publicFlag + ")");
-		
+
 		if (name.length() == 0) {
 			throw new BadRequestException("Event name is required");
 		}
 		final User userMe = getAuthenticatedUser(authenticatedEmail);
 
 		final Event event = persist.createEvent(userMe, name, description, triggerPermission, publicFlag);
-		
+
 		if (triggerPermission == TriggerPermissionEnum.URL_ONLY) {
 			StringBuffer body = new StringBuffer();
 			body.append("You have created URL triggered event '").append(name).append("'.\n\n");
@@ -92,7 +92,7 @@ public class EventLogic extends AbstractLogic {
 		}
 
 		activityLogic.createActivity(userMe, "Created event " + event.getName(), POINTS_FOR_CREATING_EVENT);
-		
+
 		return event;
 	}
 
@@ -109,7 +109,7 @@ public class EventLogic extends AbstractLogic {
 			throw new BadRequestException("Event name is required");
 		}
 		final User userMe = getAuthenticatedUser(authenticatedEmail);
-		
+
 		final Event event = persist.updateEvent(userMe, eventId, name, description,
 				triggerPermission, publicFlag);
 
@@ -122,11 +122,11 @@ public class EventLogic extends AbstractLogic {
 		LOG.debug("EventLogic.joinEvent(" + authenticatedEmail + "," + eventId + ")");
 
 		final User userMe = getAuthenticatedUser(authenticatedEmail);
-		
+
 		final Event event = persist.joinEvent(userMe, eventId);
 
 		notifier.sendNotifications(event, "EVENT_CHANGED:", staticId(event.getEventId()));
-		
+
 		activityLogic.createActivity(userMe, "Joined public event " + event.getName(), POINTS_FOR_JOINING_PUBLIC_EVENT);
 
 		return event.getEventMemberForUser(userMe);
@@ -136,7 +136,7 @@ public class EventLogic extends AbstractLogic {
 		LOG.debug("EventLogic.leaveEvent(" + authenticatedEmail + "," + eventId + ")");
 
 		final User userMe = getAuthenticatedUser(authenticatedEmail);
-		
+
 		final Event event = persist.leaveEvent(userMe, eventId);
 
 		if (event.isPublicFlag()) {
@@ -151,25 +151,25 @@ public class EventLogic extends AbstractLogic {
 		LOG.debug("EventLogic.deleteEvent(" + authenticatedEmail + "," + eventId + ")");
 
 		final User userMe = getAuthenticatedUser(authenticatedEmail);
-		
+
 		final Event event = persist.deleteEvent(userMe, eventId);
-		
+
 		notifier.sendNotifications(event, "EVENT_DELETED:", staticId(event.getEventId()));
 	}
 
-	public void setEventDAO(EventDAO eventDAO) {
+	public void setEventDAO(final EventDAO eventDAO) {
 		this.eventDAO = eventDAO;
 	}
 
-	public void setActivityLogic(ActivityLogic activityLogic) {
+	public void setActivityLogic(final ActivityLogic activityLogic) {
 		this.activityLogic = activityLogic;
 	}
 
-	public void setPersist(EventLogicTransactional persist) {
+	public void setPersist(final EventLogicTransactional persist) {
 		this.persist = persist;
 	}
 
-	public void setNotifier(Notifier notifier) {
+	public void setNotifier(final Notifier notifier) {
 		this.notifier = notifier;
 	}
 }

@@ -24,25 +24,26 @@ import com.pushsignal.exceptions.BadRequestException;
 @Scope("singleton")
 @Service
 public class UserLogic extends AbstractLogic {
-	private static final Logger LOG = Logger.getLogger("com.pushsignal.logic.UserLogic");	
+	private static final Logger LOG = Logger.getLogger(UserLogic.class);
 
 	private static final String ACCEPTABLE_EMAIL_REGEX = "(?i)^[A-Z0-9._%-]+@(?:[A-Z0-9-]+\\.)+[A-Z]{2,4}$";
 
 	private static final String PASSWORD_CHARSET = "0123456789abcdefghijklmnopqrstuvwxyz";
+
 	private static final int PASSWORD_LENGTH = 8;
-	
+
 	@Autowired
 	private UserDeviceDAO userDeviceDAO;
 
 	@Autowired
 	private EventInviteDAO eventInviteDAO;
-	
+
 	@Autowired
 	private ActivityLogic activityLogic;
 
 	@Autowired
 	private PasswordEncryptor passwordEncryptor;
-	
+
 	@Autowired
 	private EmailClient emailClient;
 
@@ -56,10 +57,10 @@ public class UserLogic extends AbstractLogic {
 			throw new BadRequestException("Email address " + email + " is invalid.");
 		}
 		if (name.isEmpty()) {
-			throw new BadRequestException("Name is required.");			
+			throw new BadRequestException("Name is required.");
 		}
 		if (userDAO.findUserByEmail(email) != null) {
-			throw new BadRequestException("Email address " + email + " is already registered.  Please login with your existing password.");			
+			throw new BadRequestException("Email address " + email + " is already registered.  Please login with your existing password.");
 		}
 		final String password = generatePassword(PASSWORD_LENGTH);
 		final String encryptedPassword = passwordEncryptor.encryptPassword(password);
@@ -79,25 +80,25 @@ public class UserLogic extends AbstractLogic {
 			invite.setUser(user);
 			invite = eventInviteDAO.store(invite);
 		}
-		
+
 		activityLogic.createActivity(user, "Created PushSignal account", 100);
-		
+
 		StringBuffer body = new StringBuffer();
 		body.append("Congratulations on creating your new PushSignal account.\n\n");
 		body.append("Please keep this email for your records, as it contains your automatically generated password, which you will need to login should you ever re-install PushSignal or install on a different device.\n\n");
 		body.append("Password: ").append(password).append("\n\n");
 		body.append("If you enjoy PushSignal, please add a review at https://market.android.com/details?id=com.pushsignal.\n");
 		emailClient.sendEmail(email, "Your PushSignal account has been created", body.toString());
-		
+
 		return user;
 	}
-	
+
 	@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED)
 	public User resetUserPassword(final String authenticatedEmail) {
 		LOG.debug("UserLogic.resetPassword(" + authenticatedEmail + ")");
 
 		User userMe = getAuthenticatedUser(authenticatedEmail);
-		
+
 		final String password = generatePassword(PASSWORD_LENGTH);
 		final String encryptedPassword = passwordEncryptor.encryptPassword(password);
 
@@ -111,11 +112,11 @@ public class UserLogic extends AbstractLogic {
 		body.append("Password: ").append(password).append("\n\n");
 		body.append("If you enjoy PushSignal, please add a review at https://market.android.com/details?id=com.pushsignal.\n");
 		emailClient.sendEmail(userMe.getEmail(), "Your PushSignal password has been reset", body.toString());
-		
+
 		return userMe;
 	}
-	
-	private String generatePassword(int length) {
+
+	private String generatePassword(final int length) {
         Random rand = new Random();
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < length; i++) {
@@ -171,27 +172,27 @@ public class UserLogic extends AbstractLogic {
 
 	public long getPoints(final long userId) {
 		LOG.debug("UserLogic.getPoints(" + userId + ")");
-		
+
 		return userDAO.getPoints(userId);
 	}
 
-	public void setUserDeviceDAO(UserDeviceDAO userDeviceDAO) {
+	public void setUserDeviceDAO(final UserDeviceDAO userDeviceDAO) {
 		this.userDeviceDAO = userDeviceDAO;
 	}
 
-	public void setEventInviteDAO(EventInviteDAO eventInviteDAO) {
+	public void setEventInviteDAO(final EventInviteDAO eventInviteDAO) {
 		this.eventInviteDAO = eventInviteDAO;
 	}
 
-	public void setActivityLogic(ActivityLogic activityLogic) {
+	public void setActivityLogic(final ActivityLogic activityLogic) {
 		this.activityLogic = activityLogic;
 	}
 
-	public void setPasswordEncryptor(PasswordEncryptor passwordEncryptor) {
+	public void setPasswordEncryptor(final PasswordEncryptor passwordEncryptor) {
 		this.passwordEncryptor = passwordEncryptor;
 	}
 
-	public void setEmailClient(EmailClient emailClient) {
+	public void setEmailClient(final EmailClient emailClient) {
 		this.emailClient = emailClient;
 	}
 }

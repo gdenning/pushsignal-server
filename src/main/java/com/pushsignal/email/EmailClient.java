@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailClient {
-	private static final Logger LOG = Logger.getLogger("com.pushsignal.email.EmailClient");
+	private static final Logger LOG = Logger.getLogger(EmailClient.class);
 
 	private final Properties configProperties = new Properties();
 

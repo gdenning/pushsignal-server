@@ -13,7 +13,7 @@ import com.pushsignal.domain.UserDevice;
 @Service
 public class NotificationQueue {
 
-	private static final Logger LOG = Logger.getLogger("com.pushsignal.push.NotificationQueue");
+	private static final Logger LOG = Logger.getLogger(NotificationQueue.class);
 
 	public static class Notification {
 		private final String message;
