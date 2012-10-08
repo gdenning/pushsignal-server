@@ -116,6 +116,11 @@
 			<artifactId>jasypt-springsecurity3</artifactId>
 			<version>1.9.0</version>
 		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.0.5</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
