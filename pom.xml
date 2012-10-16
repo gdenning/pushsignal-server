@@ -5,8 +5,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.0des</groupId>
 	<artifactId>pushsignalserver</artifactId>
-	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>PushSignal Server</name>
 	<dependencies>
 		<dependency>
