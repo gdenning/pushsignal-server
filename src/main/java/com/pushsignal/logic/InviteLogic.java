@@ -4,7 +4,8 @@ import static com.pushsignal.push.Notifier.staticId;
 
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ import com.pushsignal.push.Notifier;
 @Scope("singleton")
 @Service
 public class InviteLogic extends AbstractLogic {
-	private static final Logger LOG = Logger.getLogger(InviteLogic.class);
+	private static final Logger LOG = LoggerFactory.getLogger(InviteLogic.class);
 
 	private static final int POINTS_FOR_INVITE_ACCEPTED = 10;
 

@@ -5,7 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jasypt.util.password.PasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -25,7 +26,7 @@ public class ConfigC2dmLogic {
 	private static final String CLIENTLOGIN_POST_URL = "https://www.google.com/accounts/ClientLogin";
 	private static final String C2DM_SENDER = "gdenning@gmail.com";
 
-	private static final Logger LOG = Logger.getLogger(ConfigC2dmLogic.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ConfigC2dmLogic.class);
 
 	private ConfigC2dm configCache;
 

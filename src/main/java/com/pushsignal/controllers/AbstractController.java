@@ -2,7 +2,8 @@ package com.pushsignal.controllers;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,7 +12,7 @@ import com.pushsignal.exceptions.PushSignalException;
 import com.pushsignal.xml.jaxb.ErrorResultDTO;
 
 public abstract class AbstractController {
-	private static final Logger LOG = Logger.getLogger(AbstractController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AbstractController.class);
 
 	protected String getAuthenticatedEmail() {
 		return SecurityContextHolder.getContext().getAuthentication().getName();

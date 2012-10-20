@@ -5,7 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import com.pushsignal.logic.ConfigC2dmLogic;
 
 @Service(value="PushClientC2dm")
 public class PushClientC2dmImpl implements PushClient {
-	private static final Logger LOG = Logger.getLogger(PushClientC2dmImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PushClientC2dmImpl.class);
 
 	private static final String C2DM_POST_URL = "https://android.apis.google.com/c2dm/send";
 

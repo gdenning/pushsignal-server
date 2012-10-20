@@ -12,12 +12,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmailClient {
-	private static final Logger LOG = Logger.getLogger(EmailClient.class);
+	private static final Logger LOG = LoggerFactory.getLogger(EmailClient.class);
 
 	private final Properties configProperties = new Properties();
 

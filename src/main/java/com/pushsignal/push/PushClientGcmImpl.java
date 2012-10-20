@@ -5,7 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.pushsignal.http.HttpExecutor;
@@ -14,7 +15,7 @@ import com.pushsignal.http.HttpResponse;
 @Service(value="PushClientGCM")
 public class PushClientGcmImpl implements PushClient {
 
-	private static final Logger LOG = Logger.getLogger(PushClientGcmImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PushClientGcmImpl.class);
 
 	private static final String GCM_API_KEY = "AIzaSyBDyyuZGPPww5j08ikk6RZwaUeVX_APboI";
 	private static final String GCM_POST_URL = "https://android.googleapis.com/gcm/send";

@@ -3,6 +3,8 @@ package com.pushsignal.security;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,11 +18,14 @@ import com.pushsignal.domain.User;
 
 public class MyUserDetailsService implements UserDetailsService {
 
+	private static final Logger LOG = LoggerFactory.getLogger(MyUserDetailsService.class);
+
 	@Autowired
 	private UserDAO userDAO;
 
 	public UserDetails loadUserByUsername(final String username)
-	throws UsernameNotFoundException, DataAccessException {
+			throws UsernameNotFoundException, DataAccessException {
+		LOG.debug("Authenticating " + username + "...");
 		final UserDetails userDetails = loadFromDB(username);
 		if (userDetails == null) {
 			throw new UsernameNotFoundException("No user with email address '"

@@ -4,7 +4,8 @@ import java.util.Date;
 import java.util.Random;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jasypt.util.password.PasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -24,7 +25,7 @@ import com.pushsignal.exceptions.BadRequestException;
 @Scope("singleton")
 @Service
 public class UserLogic extends AbstractLogic {
-	private static final Logger LOG = Logger.getLogger(UserLogic.class);
+	private static final Logger LOG = LoggerFactory.getLogger(UserLogic.class);
 
 	private static final String ACCEPTABLE_EMAIL_REGEX = "(?i)^[A-Z0-9._%-]+@(?:[A-Z0-9-]+\\.)+[A-Z]{2,4}$";
 

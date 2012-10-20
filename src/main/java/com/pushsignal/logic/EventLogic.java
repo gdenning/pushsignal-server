@@ -2,7 +2,8 @@ package com.pushsignal.logic;
 
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ import static com.pushsignal.push.Notifier.staticId;
 @Scope("singleton")
 @Service
 public class EventLogic extends AbstractLogic {
-	private static final Logger LOG = Logger.getLogger(EventLogic.class);
+	private static final Logger LOG = LoggerFactory.getLogger(EventLogic.class);
 
 	private static final int MAX_PUBLIC_EVENTS = 25;
 	private static final int POINTS_FOR_JOINING_PUBLIC_EVENT = 10;

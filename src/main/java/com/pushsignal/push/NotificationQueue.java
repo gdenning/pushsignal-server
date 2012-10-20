@@ -3,7 +3,8 @@ package com.pushsignal.push;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import com.pushsignal.domain.UserDevice;
 @Service
 public class NotificationQueue {
 
-	private static final Logger LOG = Logger.getLogger(NotificationQueue.class);
+	private static final Logger LOG = LoggerFactory.getLogger(NotificationQueue.class);
 
 	public static class Notification {
 		private final String message;
