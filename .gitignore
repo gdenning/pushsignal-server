@@ -2,4 +2,4 @@
 .classpath
 .project
 target
-manifest.mf
+MANIFEST.MF
