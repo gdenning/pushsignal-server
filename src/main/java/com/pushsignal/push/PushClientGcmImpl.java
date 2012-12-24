@@ -1,5 +1,6 @@
 package com.pushsignal.push;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public class PushClientGcmImpl implements PushClient {
 	private static final String GCM_API_KEY = "AIzaSyBDyyuZGPPww5j08ikk6RZwaUeVX_APboI";
 	private static final String GCM_POST_URL = "https://android.googleapis.com/gcm/send";
 
-	public synchronized void sendMessage(final String deviceId, final String registrationId, final String message) {
+	public synchronized void sendMessage(final String deviceId, final String registrationId, final String message) throws IOException {
 		final Map<String, String> params = new HashMap<String, String>();
 		params.put("registration_id", registrationId);
 		params.put("collapse_key", "PushSignal");

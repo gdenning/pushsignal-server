@@ -37,7 +37,7 @@ public class NotificationQueue {
 	@Autowired
 	private PushBroker pushBroker;
 
-	BlockingQueue<NotificationQueue.Notification> notifications = new LinkedBlockingQueue<NotificationQueue.Notification>();
+	private BlockingQueue<NotificationQueue.Notification> notifications = new LinkedBlockingQueue<NotificationQueue.Notification>();
 
 	public NotificationQueue() {
 		Thread thread = new Thread(new Runnable() {

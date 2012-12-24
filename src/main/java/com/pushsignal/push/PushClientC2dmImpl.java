@@ -1,5 +1,6 @@
 package com.pushsignal.push;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class PushClientC2dmImpl implements PushClient {
 	@Autowired
 	private ConfigC2dmLogic configC2dmLogic;
 
-	public synchronized void sendMessage(final String deviceId, final String registrationId, final String message) {
+	public synchronized void sendMessage(final String deviceId, final String registrationId, final String message) throws IOException {
 		final Map<String, String> params = new HashMap<String, String>();
 		params.put("registration_id", registrationId);
 		params.put("collapse_key", "PushSignal");

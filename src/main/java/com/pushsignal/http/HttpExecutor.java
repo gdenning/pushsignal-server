@@ -2,6 +2,7 @@ package com.pushsignal.http;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -16,12 +17,10 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
-import org.springframework.web.client.HttpStatusCodeException;
-
 public class HttpExecutor {
 	public static HttpResponse executePost(final String targetURL,
 			final Map<String, String> requestProperties, 
-			final Map<String, String> params) throws HttpStatusCodeException  {
+			final Map<String, String> params) throws IOException  {
 		StringBuilder urlParameters = new StringBuilder();
 		for (String key : params.keySet()) {
 			if (urlParameters.length() > 0) {
@@ -38,7 +37,7 @@ public class HttpExecutor {
 
 	public static HttpResponse executePost(final String targetURL,
 			final Map<String, String> requestProperties, 
-			final String postBody) throws HttpStatusCodeException {
+			final String postBody) throws IOException {
 		URL url;
 		HttpURLConnection connection = null;
 		HttpsURLConnection.setDefaultHostnameVerifier(new FakeHostnameVerifier()); 
@@ -82,11 +81,6 @@ public class HttpExecutor {
 			}
 
 	        return new HttpResponse(responseCode, responseLines);
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-			return null;
 
 		} finally {
 			if (connection != null) {

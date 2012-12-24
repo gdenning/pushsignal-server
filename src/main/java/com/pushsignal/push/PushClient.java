@@ -1,5 +1,7 @@
 package com.pushsignal.push;
 
+import java.io.IOException;
+
 public interface PushClient {
 	/**
 	 * Send a message to the specified device using Push technology.
@@ -7,5 +9,5 @@ public interface PushClient {
 	 * @param registrationId registration Id for the destination device
 	 * @param message to send to the device
 	 */
-	public void sendMessage(String deviceId, String registrationId, String message);
+	public void sendMessage(String deviceId, String registrationId, String message) throws IOException;
 }
