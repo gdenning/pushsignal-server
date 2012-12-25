@@ -25,9 +25,6 @@ public class EventDTO implements Serializable {
 
 	private String description;
 
-	@XmlJavaTypeAdapter(DateAdapter.class)
-	private Date createDate;
-	
 	private long createdDateInMilliseconds;
 	
 	private String triggerPermission;
@@ -49,7 +46,6 @@ public class EventDTO implements Serializable {
 		this.eventId = event.getEventId();
 		this.name = event.getName();
 		this.description = event.getDescription();
-		this.createDate = event.getCreateDate();
 		this.createdDateInMilliseconds = event.getCreateDate().getTime();
 		if (event.getLastTriggerDate() != null) {
 			this.lastTriggeredDateInMilliseconds = event.getLastTriggerDate().getTime();
@@ -85,14 +81,6 @@ public class EventDTO implements Serializable {
 
 	public String getDescription() {
 		return this.description;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public Date getCreateDate() {
-		return this.createDate;
 	}
 
 	public void setCreatedDateInMilliseconds(long createdDateInMilliseconds) {

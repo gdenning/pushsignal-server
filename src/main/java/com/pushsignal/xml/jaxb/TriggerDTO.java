@@ -1,7 +1,6 @@
 package com.pushsignal.xml.jaxb;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -9,7 +8,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.pushsignal.domain.Trigger;
 import com.pushsignal.domain.TriggerAlert;
@@ -21,9 +19,6 @@ public class TriggerDTO implements Serializable {
 
 	private long triggerId;
 
-	@XmlJavaTypeAdapter(DateAdapter.class)
-	private Date createDate;
-	
 	private long createdDateInMilliseconds;
 
 	private EventDTO event;
@@ -38,7 +33,6 @@ public class TriggerDTO implements Serializable {
 
 	public TriggerDTO(final Trigger trigger) {
 		this.triggerId = trigger.getTriggerId();
-		this.createDate = trigger.getCreateDate();
 		this.createdDateInMilliseconds = trigger.getCreateDate().getTime();
 		this.event = new EventDTO(trigger.getEvent());
 		if (trigger.getUser() != null) {
@@ -58,14 +52,6 @@ public class TriggerDTO implements Serializable {
 		return this.triggerId;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public Date getCreateDate() {
-		return this.createDate;
-	}
-
 	public void setCreatedDateInMilliseconds(long createdDateInMilliseconds) {
 		this.createdDateInMilliseconds = createdDateInMilliseconds;
 	}
@@ -81,7 +67,6 @@ public class TriggerDTO implements Serializable {
 	public EventDTO getEvent() {
 		return event;
 	}
-
 
 	public void setUser(UserDTO user) {
 		this.user = user;

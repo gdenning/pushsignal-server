@@ -5,8 +5,10 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import org.hamcrest.core.AnyOf;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
 
 import com.pushsignal.dao.EventDAO;
 import com.pushsignal.domain.Event;
@@ -27,7 +29,8 @@ public class EventLogicTest extends AbstractTest {
 		super.setup();
 		
 		mockEventDAO = mock(EventDAO.class);
-		
+		when(mockEventDAO.store(Matchers.any(Event.class))).thenReturn(new Event());
+
 		mockActivityLogic = mock(ActivityLogic.class);
 		
 		Notifier mockNotifier = mock(Notifier.class);
