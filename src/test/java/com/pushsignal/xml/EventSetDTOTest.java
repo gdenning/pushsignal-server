@@ -25,7 +25,7 @@ public class EventSetDTOTest extends XMLCompareTestCase {
 		eventMember.setUser(user);
 		final com.pushsignal.xml.jaxb.EventDTO event = new com.pushsignal.xml.jaxb.EventDTO();
 		event.setEventId(1);
-		event.setCreateDate(currentDate);
+		event.setCreatedDateInMilliseconds(currentDate.getTime());
 		event.setName("test");
 		event.setDescription("");
 		event.setTriggerPermission(TriggerPermissionEnum.ALL_MEMBERS.name());

@@ -24,7 +24,7 @@ public class TriggerSetDTOTest extends XMLCompareTestCase {
 		user.setDescription("");
 		final com.pushsignal.xml.jaxb.EventDTO event = new com.pushsignal.xml.jaxb.EventDTO();
 		event.setEventId(1);
-		event.setCreateDate(currentDate);
+		event.setCreatedDateInMilliseconds(currentDate.getTime());
 		event.setName("test");
 		event.setDescription("");
 		event.setTriggerPermission(TriggerPermissionEnum.ALL_MEMBERS.name());
@@ -32,7 +32,7 @@ public class TriggerSetDTOTest extends XMLCompareTestCase {
 		event.setMembers(new LinkedHashSet<com.pushsignal.xml.jaxb.EventMemberDTO>());
 		final com.pushsignal.xml.jaxb.TriggerDTO trigger = new com.pushsignal.xml.jaxb.TriggerDTO();
 		trigger.setTriggerId(1);
-		trigger.setCreateDate(currentDate);
+		trigger.setCreatedDateInMilliseconds(currentDate.getTime());
 		trigger.setEvent(event);
 		trigger.setUser(user);
 		trigger.setTriggerAlerts(new LinkedHashSet<com.pushsignal.xml.jaxb.TriggerAlertDTO>());

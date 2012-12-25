@@ -1,12 +1,10 @@
 package com.pushsignal.xml.jaxb;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.pushsignal.domain.EventInvite;
 
@@ -17,9 +15,6 @@ public class EventInviteDTO implements Serializable {
 
 	private long eventInviteId;
 
-	@XmlJavaTypeAdapter(DateAdapter.class)
-	private Date createDate;
-	
 	private long createdDateInMilliseconds;
 
 	private EventDTO event;
@@ -35,7 +30,6 @@ public class EventInviteDTO implements Serializable {
 		this.eventInviteId = eventInvite.getEventInviteId();
 		this.event = new EventDTO(eventInvite.getEvent());
 		this.email = eventInvite.getEmail();
-		this.createDate = eventInvite.getCreateDate();
 		this.createdDateInMilliseconds = eventInvite.getCreateDate().getTime();
 		if (eventInvite.getUser() != null) {
 			this.user = new UserDTO(eventInvite.getUser());
@@ -48,14 +42,6 @@ public class EventInviteDTO implements Serializable {
 
 	public long getEventInviteId() {
 		return this.eventInviteId;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public Date getCreateDate() {
-		return this.createDate;
 	}
 
 	public void setCreatedDateInMilliseconds(long createdDateInMilliseconds) {

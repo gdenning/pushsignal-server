@@ -24,7 +24,7 @@ public class EventInviteSetDTOTest extends XMLCompareTestCase {
 		user.setDescription("");
 		final com.pushsignal.xml.jaxb.EventDTO event = new com.pushsignal.xml.jaxb.EventDTO();
 		event.setEventId(1);
-		event.setCreateDate(currentDate);
+		event.setCreatedDateInMilliseconds(currentDate.getTime());
 		event.setName("test");
 		event.setDescription("");
 		event.setTriggerPermission(TriggerPermissionEnum.ALL_MEMBERS.name());
@@ -32,7 +32,7 @@ public class EventInviteSetDTOTest extends XMLCompareTestCase {
 		event.setMembers(new LinkedHashSet<com.pushsignal.xml.jaxb.EventMemberDTO>());
 		final com.pushsignal.xml.jaxb.EventInviteDTO eventInvite = new com.pushsignal.xml.jaxb.EventInviteDTO();
 		eventInvite.setEventInviteId(1);
-		eventInvite.setCreateDate(currentDate);
+		eventInvite.setCreatedDateInMilliseconds(currentDate.getTime());
 		eventInvite.setEvent(event);
 		eventInvite.setEmail("newuser@whatever.com");
 		eventInviteSet.getEventInvites().add(eventInvite);
