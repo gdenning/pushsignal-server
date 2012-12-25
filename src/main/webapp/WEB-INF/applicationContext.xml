@@ -15,8 +15,8 @@
 	<!-- ******************************************************************** -->
 	<!-- Include context files from different layers -->
 	<!-- ******************************************************************** -->
-	<import resource="security-context.xml" />
-	<import resource="service-context.xml" />
-	<import resource="dao-context.xml" />
+	<import resource="classpath:security-context.xml" />
+	<import resource="classpath:service-context.xml" />
+	<import resource="classpath:dao-context.xml" />
 	
 </beans>
