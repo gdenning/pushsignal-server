@@ -17,6 +17,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
@@ -99,21 +102,30 @@ public class UserDevice implements Serializable {
 	public Date getLastSeenDate() {
 		return lastSeenDate;
 	}
+	
+	/**
+	 * Returns a textual representation of a bean.
+	 */
+	public String toString() {
+		return new ToStringBuilder(this)
+			.append("userDeviceId", userDeviceId)
+			.append("user", user)
+			.append("deviceType", deviceType)
+			.append("deviceId", deviceId)
+			.append("registrationId", registrationId)
+			.append("lastSeenDate", lastSeenDate)
+			.toString();
+	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((deviceId == null) ? 0 : deviceId.hashCode());
-		result = prime * result
-				+ ((deviceType == null) ? 0 : deviceType.hashCode());
-		result = prime * result
-				+ ((lastSeenDate == null) ? 0 : lastSeenDate.hashCode());
-		result = prime * result
-				+ ((registrationId == null) ? 0 : registrationId.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
-		return result;
+		return new HashCodeBuilder()
+			.append(user)
+			.append(deviceType)
+			.append(deviceId)
+			.append(registrationId)
+			.append(lastSeenDate)
+			.toHashCode();
 	}
 
 	@Override
@@ -128,41 +140,12 @@ public class UserDevice implements Serializable {
 			return false;
 		}
 		UserDevice other = (UserDevice) obj;
-		if (deviceId == null) {
-			if (other.deviceId != null) {
-				return false;
-			}
-		} else if (!deviceId.equals(other.deviceId)) {
-			return false;
-		}
-		if (deviceType == null) {
-			if (other.deviceType != null) {
-				return false;
-			}
-		} else if (!deviceType.equals(other.deviceType)) {
-			return false;
-		}
-		if (lastSeenDate == null) {
-			if (other.lastSeenDate != null) {
-				return false;
-			}
-		} else if (!lastSeenDate.equals(other.lastSeenDate)) {
-			return false;
-		}
-		if (registrationId == null) {
-			if (other.registrationId != null) {
-				return false;
-			}
-		} else if (!registrationId.equals(other.registrationId)) {
-			return false;
-		}
-		if (user == null) {
-			if (other.user != null) {
-				return false;
-			}
-		} else if (!user.equals(other.user)) {
-			return false;
-		}
-		return true;
+		return new EqualsBuilder()
+			.append(user, other.user)
+			.append(deviceType, other.deviceType)
+			.append(deviceId, other.deviceId)
+			.append(registrationId, other.registrationId)
+			.append(lastSeenDate, other.lastSeenDate)
+			.isEquals();
 	}
 }

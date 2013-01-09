@@ -19,6 +19,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
@@ -98,27 +101,23 @@ public class TriggerAlert implements Serializable {
 	 * Returns a textual representation of a bean.
 	 */
 	public String toString() {
-
-		StringBuilder buffer = new StringBuilder();
-
-		buffer.append("triggerAlertId=[").append(triggerAlertId).append("] ");
-		buffer.append("modifiedDate=[").append(modifiedDate).append("] ");
-
-		return buffer.toString();
+		return new ToStringBuilder(this)
+			.append("triggerAlertId", triggerAlertId)
+			.append("trigger", trigger)
+			.append("user", user)
+			.append("modifiedDate", modifiedDate)
+			.append("status", status)
+			.toString();
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((modifiedDate == null) ? 0 : modifiedDate.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result + ((trigger == null) ? 0 : trigger.hashCode());
-		result = prime * result
-				+ (int) (triggerAlertId ^ (triggerAlertId >>> 32));
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
-		return result;
+		return new HashCodeBuilder()
+			.append(trigger)
+			.append(user)
+			.append(modifiedDate)
+			.append(status)
+			.toHashCode();
 	}
 
 	@Override
@@ -130,29 +129,12 @@ public class TriggerAlert implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		TriggerAlert other = (TriggerAlert) obj;
-		if (modifiedDate == null) {
-			if (other.modifiedDate != null)
-				return false;
-		} else if (!modifiedDate.equals(other.modifiedDate))
-			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-			return false;
-		if (trigger == null) {
-			if (other.trigger != null)
-				return false;
-		} else if (!trigger.equals(other.trigger))
-			return false;
-		if (triggerAlertId != other.triggerAlertId)
-			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
-			return false;
-		return true;
+		return new EqualsBuilder()
+			.append(trigger, other.trigger)
+			.append(user, other.user)
+			.append(modifiedDate, other.modifiedDate)
+			.append(status, other.status)
+			.isEquals();
 	}
 
 	public enum TriggerAlertStatusEnum {

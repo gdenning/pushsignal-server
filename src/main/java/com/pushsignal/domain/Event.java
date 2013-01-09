@@ -25,6 +25,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
@@ -239,34 +242,31 @@ public class Event implements Serializable {
 	 * Returns a textual representation of a bean.
 	 */
 	public String toString() {
-
-		StringBuilder buffer = new StringBuilder();
-
-		buffer.append("eventId=[").append(eventId).append("] ");
-		buffer.append("name=[").append(name).append("] ");
-		buffer.append("description=[").append(description).append("] ");
-		buffer.append("createDate=[").append(createDate).append("] ");
-
-		return buffer.toString();
+		return new ToStringBuilder(this)
+			.append("eventId", eventId)
+			.append("name", name)
+			.append("description", description)
+			.append("createDate", createDate)
+			.append("lastTriggerDate", lastTriggerDate)
+			.append("urlGuid", urlGuid)
+			.append("triggerPermission", triggerPermission)
+			.append("publicFlag", publicFlag)
+			.append("owner", owner)
+			.toString();
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((createDate == null) ? 0 : createDate.hashCode());
-		result = prime * result
-				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-		result = prime * result + (publicFlag ? 1231 : 1237);
-		result = prime
-				* result
-				+ ((triggerPermission == null) ? 0 : triggerPermission
-						.hashCode());
-		result = prime * result + ((urlGuid == null) ? 0 : urlGuid.hashCode());
-		return result;
+		return new HashCodeBuilder()
+			.append(name)
+			.append(description)
+			.append(createDate)
+			.append(lastTriggerDate)
+			.append(urlGuid)
+			.append(triggerPermission)
+			.append(publicFlag)
+			.append(owner)
+			.toHashCode();
 	}
 
 	@Override
@@ -281,48 +281,15 @@ public class Event implements Serializable {
 			return false;
 		}
 		Event other = (Event) obj;
-		if (createDate == null) {
-			if (other.createDate != null) {
-				return false;
-			}
-		} else if (!createDate.equals(other.createDate)) {
-			return false;
-		}
-		if (description == null) {
-			if (other.description != null) {
-				return false;
-			}
-		} else if (!description.equals(other.description)) {
-			return false;
-		}
-		if (name == null) {
-			if (other.name != null) {
-				return false;
-			}
-		} else if (!name.equals(other.name)) {
-			return false;
-		}
-		if (owner == null) {
-			if (other.owner != null) {
-				return false;
-			}
-		} else if (!owner.equals(other.owner)) {
-			return false;
-		}
-		if (publicFlag != other.publicFlag) {
-			return false;
-		}
-		if (triggerPermission != other.triggerPermission) {
-			return false;
-		}
-		if (urlGuid == null) {
-			if (other.urlGuid != null) {
-				return false;
-			}
-		} else if (!urlGuid.equals(other.urlGuid)) {
-			return false;
-		}
-		return true;
+		return new EqualsBuilder()
+			.append(name, other.name)
+			.append(description, other.description)
+			.append(lastTriggerDate, other.lastTriggerDate)
+			.append(urlGuid, other.urlGuid)
+			.append(triggerPermission, other.triggerPermission)
+			.append(publicFlag, other.publicFlag)
+			.append(owner, other.owner)
+			.isEquals();
 	}
 
 }

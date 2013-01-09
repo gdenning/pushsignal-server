@@ -7,6 +7,10 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 @Entity
 @Table(catalog = "PushSignal", name = "TConfigC2dm")
 public class ConfigC2dm {
@@ -46,16 +50,20 @@ public class ConfigC2dm {
 	public String getAuthToken() {
 		return authToken;
 	}
+	
+	public String toString() {
+		return new ToStringBuilder(this)
+			.append("configId", configId)
+			.append("authToken", authToken)
+			.toString();
+	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((authToken == null) ? 0 : authToken.hashCode());
-		result = prime * result
-				+ ((password == null) ? 0 : password.hashCode());
-		return result;
+		return new HashCodeBuilder()
+			.append(authToken)
+			.append(password)
+			.toHashCode();
 	}
 
 	@Override
@@ -70,20 +78,9 @@ public class ConfigC2dm {
 			return false;
 		}
 		ConfigC2dm other = (ConfigC2dm) obj;
-		if (authToken == null) {
-			if (other.authToken != null) {
-				return false;
-			}
-		} else if (!authToken.equals(other.authToken)) {
-			return false;
-		}
-		if (password == null) {
-			if (other.password != null) {
-				return false;
-			}
-		} else if (!password.equals(other.password)) {
-			return false;
-		}
-		return true;
+		return new EqualsBuilder()
+			.append(authToken, other.authToken)
+			.append(password, other.password)
+			.isEquals();
 	}
 }

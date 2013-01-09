@@ -23,6 +23,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
@@ -53,7 +56,7 @@ public class Trigger implements Serializable {
 	@JoinColumns( { @JoinColumn(name = "CreateUserID", referencedColumnName = "UserID", nullable = true) })
 	@ForeignKey(name = "FK_Trigger_CreatedBy")
 	private User user;
-
+	
 	@OneToMany(mappedBy = "trigger", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	@ForeignKey(name = "FK_TriggerAlert_Trigger")
 	private Set<TriggerAlert> triggerAlerts;
@@ -124,24 +127,21 @@ public class Trigger implements Serializable {
 	 * Returns a textual representation of a bean.
 	 */
 	public String toString() {
-
-		StringBuilder buffer = new StringBuilder();
-
-		buffer.append("triggerId=[").append(triggerId).append("] ");
-		buffer.append("createDate=[").append(createDate).append("] ");
-
-		return buffer.toString();
+		return new ToStringBuilder(this)
+			.append("triggerId", triggerId)
+			.append("createDate", createDate)
+			.append("event", event)
+			.append("user", user)
+			.toString();
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((createDate == null) ? 0 : createDate.hashCode());
-		result = prime * result + ((event == null) ? 0 : event.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
-		return result;
+		return new HashCodeBuilder()
+			.append(createDate)
+			.append(event)
+			.append(user)
+			.toHashCode();
 	}
 
 	@Override
@@ -153,22 +153,11 @@ public class Trigger implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Trigger other = (Trigger) obj;
-		if (createDate == null) {
-			if (other.createDate != null)
-				return false;
-		} else if (!createDate.equals(other.createDate))
-			return false;
-		if (event == null) {
-			if (other.event != null)
-				return false;
-		} else if (!event.equals(other.event))
-			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
-			return false;
-		return true;
+		return new EqualsBuilder()
+			.append(createDate, other.createDate)
+			.append(event, other.event)
+			.append(user, other.user)
+			.isEquals();
 	}
 
 }

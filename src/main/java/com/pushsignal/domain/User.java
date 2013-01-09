@@ -17,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.annotations.ForeignKey;
 
 @Entity
@@ -213,30 +216,21 @@ public class User implements Serializable {
 	 * Returns a textual representation of a bean.
 	 */
 	public String toString() {
-
-		StringBuilder buffer = new StringBuilder();
-
-		buffer.append("userId=[").append(userId).append("] ");
-		buffer.append("email=[").append(email).append("] ");
-		buffer.append("password=[").append(password).append("] ");
-		buffer.append("name=[").append(name).append("] ");
-		buffer.append("description=[").append(description).append("] ");
-
-		return buffer.toString();
+		return new ToStringBuilder(this)
+			.append("userId", userId)
+			.append("email", email)
+			.append("name", name)
+			.append("description", description)
+			.toString();
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result
-				+ ((password == null) ? 0 : password.hashCode());
-		result = prime * result + (int) (userId ^ (userId >>> 32));
-		return result;
+		return new HashCodeBuilder()
+			.append(email)
+			.append(name)
+			.append(description)
+			.toHashCode();
 	}
 
 	@Override
@@ -248,29 +242,11 @@ public class User implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (userId != other.userId)
-			return false;
-		return true;
+		return new EqualsBuilder()
+			.append(email, other.email)
+			.append(name, other.name)
+			.append(description, other.description)
+			.isEquals();
 	}
 
 }
