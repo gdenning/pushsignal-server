@@ -113,7 +113,9 @@ public class TriggerLogic extends AbstractLogic {
 		notifier.sendNotifications(trigger, TRIGGER_ACK, staticId(myTriggerAlert.getTriggerAlertId()));
 
 		// Give points to the user who sent the trigger
-		activityLogic.createActivity(trigger.getUser(), "Trigger of event " + trigger.getEvent().getName() + " was acknowledged by " + userMe.getName(), POINTS_FOR_TRIGGER_ACKNOWLEDGED);
+		if (trigger.getUser() != null) {
+			activityLogic.createActivity(trigger.getUser(), "Trigger of event " + trigger.getEvent().getName() + " was acknowledged by " + userMe.getName(), POINTS_FOR_TRIGGER_ACKNOWLEDGED);
+		}
 
 		return myTriggerAlert;
 	}
