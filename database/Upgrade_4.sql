@@ -1,2 +1,2 @@
 ALTER TABLE TTrigger
-	ADD COLUMN message varchar(4000);
+	ADD COLUMN Message varchar(4000);
