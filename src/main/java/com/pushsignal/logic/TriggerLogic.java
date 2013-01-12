@@ -64,14 +64,14 @@ public class TriggerLogic extends AbstractLogic {
 		return triggerDAO.findActiveTriggersForUser(userMe);
 	}
 
-	public Trigger createTrigger(final String authenticatedEmail, final long eventId) {
+	public Trigger createTrigger(final String authenticatedEmail, final long eventId, final String message) {
 		LOG.debug("TriggerLogic.createTrigger(" + authenticatedEmail + "," + eventId + ")");
 
 		final User userMe = getAuthenticatedUser(authenticatedEmail);
 
 		// Persist and flush trigger and trigger alerts first so that clients can find
 		// them in the database.
-		final Trigger trigger = persist.createTrigger(userMe, eventId);
+		final Trigger trigger = persist.createTrigger(userMe, eventId, message);
 
 		notifier.sendNotifications(trigger, TRIGGER_ALERT, perTriggerId(), userMe);
 		notifier.sendNotifications(trigger, EVENT_CHANGED, staticId(eventId));
@@ -80,12 +80,12 @@ public class TriggerLogic extends AbstractLogic {
 	}
 
 
-	public Trigger createTriggerByGuid(final String urlGuid) {
+	public Trigger createTriggerByGuid(final String urlGuid, final String message) {
 		LOG.debug("TriggerLogic.createTriggerByGuid(" + urlGuid + ")");
 
 		// Persist and flush trigger and trigger alerts first so that clients can find
 		// them in the database.
-		final Trigger trigger = persist.createTriggerByGuid(urlGuid);
+		final Trigger trigger = persist.createTriggerByGuid(urlGuid, message);
 
 		// Notify all event members about the trigger and that the event changed (the last trigger date)
 		notifier.sendNotifications(trigger, TRIGGER_ALERT, perTriggerId());

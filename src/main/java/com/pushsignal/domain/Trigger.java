@@ -57,6 +57,10 @@ public class Trigger implements Serializable {
 	@ForeignKey(name = "FK_Trigger_CreatedBy")
 	private User user;
 	
+	@Column(name = "message", length = 4000)
+	@Basic(fetch = FetchType.EAGER)
+	private String message;
+	
 	@OneToMany(mappedBy = "trigger", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	@ForeignKey(name = "FK_TriggerAlert_Trigger")
 	private Set<TriggerAlert> triggerAlerts;
@@ -91,6 +95,14 @@ public class Trigger implements Serializable {
 
 	public User getUser() {
 		return user;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public void setTriggerAlerts(Set<TriggerAlert> triggerAlerts) {
@@ -132,6 +144,7 @@ public class Trigger implements Serializable {
 			.append("createDate", createDate)
 			.append("event", event)
 			.append("user", user)
+			.append("message", message)
 			.toString();
 	}
 
@@ -141,6 +154,7 @@ public class Trigger implements Serializable {
 			.append(createDate)
 			.append(event)
 			.append(user)
+			.append(message)
 			.toHashCode();
 	}
 
@@ -157,6 +171,7 @@ public class Trigger implements Serializable {
 			.append(createDate, other.createDate)
 			.append(event, other.event)
 			.append(user, other.user)
+			.append(message, other.message)
 			.isEquals();
 	}
 

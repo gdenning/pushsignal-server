@@ -38,7 +38,7 @@ class TriggerLogicTransactional {
 	@Autowired
 	private TriggerAlertDAO triggerAlertDAO;
 
-	public Trigger createTrigger(final User userMe, final long eventId) {
+	public Trigger createTrigger(final User userMe, final long eventId, final String message) {
 		final Event event = eventDAO.findEventByPrimaryKey(eventId);
 		if (event == null) {
 			throw new ResourceNotFoundException("Unable to locate event with passed ID: "
@@ -63,6 +63,7 @@ class TriggerLogicTransactional {
 		trigger.setCreateDate(now);
 		trigger.setEvent(event);
 		trigger.setUser(userMe);
+		trigger.setMessage(message);
 
 		final Set<TriggerAlert> triggerAlerts = new LinkedHashSet<TriggerAlert>();
 		for (final EventMember eventMember : event.getMembers()) {
@@ -83,7 +84,7 @@ class TriggerLogicTransactional {
 		return trigger;
 	}
 
-	public Trigger createTriggerByGuid(final String urlGuid) {
+	public Trigger createTriggerByGuid(final String urlGuid, final String message) {
 		final Event event = eventDAO.findEventByGuid(urlGuid);
 		if (event == null) {
 			throw new ResourceNotFoundException("Unable to locate event with passed Guid: "
@@ -97,6 +98,7 @@ class TriggerLogicTransactional {
 		trigger.setCreateDate(new Date());
 		trigger.setEvent(event);
 		trigger.setUser(null);
+		trigger.setMessage(message);
 
 		final Set<TriggerAlert> triggerAlerts = new LinkedHashSet<TriggerAlert>();
 		for (final EventMember eventMember : event.getMembers()) {

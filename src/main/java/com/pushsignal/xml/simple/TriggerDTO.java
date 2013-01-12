@@ -22,6 +22,9 @@ public class TriggerDTO implements Serializable {
 
 	@Element(required = false)
 	private UserDTO user;
+	
+	@Element(required = false)
+	private String message;
 
 	@ElementList(name="triggerAlert", inline=true, required=false)
 	private LinkedHashSet<TriggerAlertDTO> triggerAlerts;
@@ -56,6 +59,14 @@ public class TriggerDTO implements Serializable {
 
 	public UserDTO getUser() {
 		return user;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public void setTriggerAlerts(LinkedHashSet<TriggerAlertDTO> triggerAlerts) {

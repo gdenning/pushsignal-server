@@ -2,6 +2,7 @@ package com.pushsignal.push;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,14 +20,20 @@ public class PushClientC2dmImpl implements PushClient {
 	private static final Logger LOG = LoggerFactory.getLogger(PushClientC2dmImpl.class);
 
 	private static final String C2DM_POST_URL = "https://android.apis.google.com/c2dm/send";
-
+	
 	@Autowired
 	private ConfigC2dmLogic configC2dmLogic;
+	
+	private int collapseKey;
+
+	public PushClientC2dmImpl() {
+		collapseKey = new Random().nextInt();
+	}
 
 	public synchronized void sendMessage(final String deviceId, final String registrationId, final String message) {
 		final Map<String, String> params = new HashMap<String, String>();
 		params.put("registration_id", registrationId);
-		params.put("collapse_key", "PushSignal");
+		params.put("collapse_key", "PushSignal" + collapseKey);
 		params.put("data.message", message);
 		final Map<String, String> requestProperties = new HashMap<String, String>();
 		requestProperties.put("Authorization", "GoogleLogin auth=" + configC2dmLogic.getAuthToken());

@@ -20,6 +20,8 @@ import com.pushsignal.push.Notifier;
 
 public class TriggerLogicTest extends AbstractTest {
 
+	private static final String MESSAGE = "message";
+
 	private static final String URL_GUID = "URL_GUID";
 
 	private TriggerLogic triggerLogic;
@@ -78,14 +80,14 @@ public class TriggerLogicTest extends AbstractTest {
 		authenticateAs(USER_EMAIL_EVENT_OWNER, USER_NAME_EVENT_OWNER);
 		when(mockEventDAO.findEventByPrimaryKey(EVENT_ID)).thenReturn(createEvent(false, true, TriggerPermissionEnum.OWNER_ONLY));
 		when(mockTriggerDAO.store(any(Trigger.class))).thenReturn(createTrigger(true));
-		assertNotNull(triggerLogic.createTrigger(USER_EMAIL_EVENT_OWNER, EVENT_ID));
+		assertNotNull(triggerLogic.createTrigger(USER_EMAIL_EVENT_OWNER, EVENT_ID, MESSAGE));
 	}
 
 	@Test
 	public void testCreateTriggerByGuid() {
 		when(mockEventDAO.findEventByGuid(URL_GUID)).thenReturn(createEvent(true, true, TriggerPermissionEnum.URL_ONLY));
 		when(mockTriggerDAO.store(any(Trigger.class))).thenReturn(createTrigger(true));
-		assertNotNull(triggerLogic.createTriggerByGuid(URL_GUID));
+		assertNotNull(triggerLogic.createTriggerByGuid(URL_GUID, MESSAGE));
 	}
 
 	@Test

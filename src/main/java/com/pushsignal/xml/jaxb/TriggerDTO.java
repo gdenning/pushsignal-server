@@ -24,6 +24,8 @@ public class TriggerDTO implements Serializable {
 	private EventDTO event;
 
 	private UserDTO user;
+	
+	private String message;
 
 	@XmlElement(name="triggerAlert")
 	private Set<TriggerAlertDTO> triggerAlerts;
@@ -35,6 +37,7 @@ public class TriggerDTO implements Serializable {
 		this.triggerId = trigger.getTriggerId();
 		this.createdDateInMilliseconds = trigger.getCreateDate().getTime();
 		this.event = new EventDTO(trigger.getEvent());
+		this.message = trigger.getMessage();
 		if (trigger.getUser() != null) {
 			this.user = new UserDTO(trigger.getUser());
 		}
@@ -74,6 +77,14 @@ public class TriggerDTO implements Serializable {
 
 	public UserDTO getUser() {
 		return user;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public void setTriggerAlerts(Set<TriggerAlertDTO> triggerAlerts) {

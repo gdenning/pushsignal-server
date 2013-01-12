@@ -70,9 +70,9 @@ public class TriggerController extends AbstractController {
 	 */
 	@RequestMapping(value="/triggers/create", method = RequestMethod.POST)
 	public ModelAndView createTrigger(final HttpServletResponse response,
-			@RequestParam final long eventId) {
+			@RequestParam final long eventId, @RequestParam(required = false) final String message) {
 		try {
-			final Trigger trigger = triggerLogic.createTrigger(getAuthenticatedEmail(), eventId);
+			final Trigger trigger = triggerLogic.createTrigger(getAuthenticatedEmail(), eventId, message);
 			return getXMLModelAndView("trigger", new TriggerDTO(trigger));
 		} catch (final Exception ex) {
 			return getErrorModelAndView(response, ex);
@@ -87,9 +87,9 @@ public class TriggerController extends AbstractController {
 	 */
 	@RequestMapping(value="/triggers/create/{eventGuid}", method = RequestMethod.GET)
 	public ModelAndView createTrigger(final HttpServletResponse response,
-			@PathVariable final String eventGuid) {
+			@PathVariable final String eventGuid, @RequestParam(required = false) final String message) {
 		try {
-			final Trigger trigger = triggerLogic.createTriggerByGuid(eventGuid);
+			final Trigger trigger = triggerLogic.createTriggerByGuid(eventGuid, message);
 			return getXMLModelAndView("trigger", new TriggerDTO(trigger));
 		} catch (final Exception ex) {
 			return getErrorModelAndView(response, ex);
